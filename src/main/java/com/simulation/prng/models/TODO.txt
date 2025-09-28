@@ -1,0 +1,2 @@
+1. Make every function throw an exception and catch it inside it's controller
+1. When it's time to call any function, it needs to be divided for 10^n where n is the number of digits.
