@@ -1,20 +1,24 @@
 package com.simulation.prng.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class MSM {
 
-    public static List<Long> generate(long seed, int iterations) {
+    public static List<Double> generate(long seed, int iterations) {
 
-        List<Long> sequence = new ArrayList<>();
+        List<Double> sequence = new ArrayList<>();
+        HashSet<Double> set = new HashSet<>();
 
         long current = seed;
         int length = String.valueOf(current).length();
+        long divisor = (long) Math.pow(10, length);
+        boolean iterate = true;
 
         String format = "%0"+ (2 + length) + "d";
 
-        for (int i = 0; i < iterations; i++) {
+        while (iterate) {
             long squared = current * current;
 
             String formatted = String.format(format, squared);
@@ -26,7 +30,8 @@ public class MSM {
 
             current = Long.parseLong(middle);
 
-            sequence.add(current);
+            sequence.add((double) current / divisor);
+
         }
         return sequence;
     }

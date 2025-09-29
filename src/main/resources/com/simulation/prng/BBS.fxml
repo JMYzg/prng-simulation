@@ -24,8 +24,8 @@
             <Insets top="10.0" />
         </padding>
         <Label text="p" />
-       <TextField fx:id="pBBSTextField" />
+       <TextField fx:id="pBBSTextField" prefHeight="25.0" prefWidth="258.0" />
         <Label text="q" />
-        <TextField fx:id="qBBSTextField" prefHeight="25.0" prefWidth="305.0" />
+        <TextField fx:id="qBBSTextField" prefHeight="25.0" prefWidth="283.0" />
     </HBox>
 </VBox>

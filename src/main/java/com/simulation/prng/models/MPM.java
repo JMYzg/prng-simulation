@@ -5,14 +5,15 @@ import java.util.List;
 
 public class MPM {
 
-    public static List<Long> generate(long seed1, long seed2, int iterations) {
-        List<Long> sequence = new ArrayList<>();
+    public static List<Double> generate(long seed1, long seed2, int iterations) {
+        List<Double> sequence = new ArrayList<>();
 
         long current1 = seed1;
         long current2 = seed2;
 
         // both seeds need to match
         int length = String.valueOf(current1).length();
+        long divisor = (long) Math.pow(10, length);
 
         String format = "%0"+ (2 + length) + "d";
 
@@ -28,7 +29,7 @@ public class MPM {
 
             long next = Long.parseLong(middle);
 
-            sequence.add(next);
+            sequence.add((double) next / divisor);
 
             current1 = current2;
             current2 = next;

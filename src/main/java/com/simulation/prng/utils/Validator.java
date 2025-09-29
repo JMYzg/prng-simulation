@@ -6,7 +6,19 @@ public class Validator {
         return n.longValue() % 2 != 0;
     }
 
-    public static <T extends Number> boolean isNatural (T n) {
-        return n.longValue() > 0;
+    @SafeVarargs
+    public static <T extends Number> boolean isNotNatural(T... n) {
+        for (T t : n) {
+            if (t.longValue() > 0) return false;
+        }
+        return true;
+    }
+
+    @SafeVarargs
+    public static <T extends String> boolean isEmpty (T... s) {
+        for (T t : s) {
+            if (!t.isEmpty()) return false;
+        }
+        return true;
     }
 }

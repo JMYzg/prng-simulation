@@ -2,6 +2,7 @@ package com.simulation.prng.controllers.algorithms;
 
 import com.simulation.prng.controllers.utils.AlertHandler;
 import com.simulation.prng.controllers.utils.Algorithm;
+import com.simulation.prng.controllers.utils.TaskFactory;
 import com.simulation.prng.models.MSM;
 import com.simulation.prng.utils.Validator;
 import javafx.collections.FXCollections;
@@ -13,6 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+
 public class MSMController implements Algorithm {
 
     @FXML
@@ -20,13 +24,16 @@ public class MSMController implements Algorithm {
             seedMSMTextField,
             iterationMSMTextField;
 
-    private ListView<Long> listView;
     private Button executeButton;
 
+    private Consumer<ObservableList<Double>> success;
+    private Consumer<Throwable> failure;
+
     @Override
-    public void setSharedComponents(ListView<Long> listView, Button excecuteButton) {
-        this.listView = listView;
+    public void setSharedComponents(Button excecuteButton, Consumer<ObservableList<Double>> success, Consumer<Throwable> failure) {
         this.executeButton = excecuteButton;
+        this.success = success;
+        this.failure = failure;
     }
 
     @Override
@@ -35,7 +42,7 @@ public class MSMController implements Algorithm {
         String seedText = seedMSMTextField.getText().trim();
         String iterationText = iterationMSMTextField.getText().trim();
 
-        if (seedText.isEmpty() || iterationText.isEmpty()) {
+        if (Validator.isEmpty(seedText, iterationText)) {
             AlertHandler.showAlert(
                     Alert.AlertType.ERROR,
                     "Error",
@@ -53,7 +60,7 @@ public class MSMController implements Algorithm {
             seed = Long.parseLong(seedText);
             iterations = Integer.parseInt(iterationText);
 
-            if (!Validator.isNatural(seed) || !Validator.isNatural(iterations)) {
+            if (Validator.isNotNatural(seed) || Validator.isNotNatural(iterations)) {
                 AlertHandler.showAlert(
                         Alert.AlertType.WARNING,
                         "Warning",
@@ -74,37 +81,16 @@ public class MSMController implements Algorithm {
             return;
         }
 
-        Task<ObservableList<Long>> task = setTask(seed, iterations);
+        Callable<ObservableList<Double>> logic = () -> FXCollections.observableArrayList(MSM.generate(seed, iterations));
+        Task<ObservableList<Double>> task = TaskFactory.create(logic, success, failure);
 
         executeButton.setDisable(true);
         new Thread(task).start();
     }
 
-    private Task<ObservableList<Long>> setTask(long seed, int iterations) {
-        Task<ObservableList<Long>> task = new Task<>() {
-            @Override
-            protected ObservableList<Long> call() throws Exception {
-                return FXCollections.observableArrayList(MSM.generate(seed, iterations));
-            }
-        };
-
-        task.setOnSucceeded(event -> {
-            listView.setItems(task.getValue());
-            executeButton.setDisable(false);
-        });
-
-        task.setOnFailed(event -> {
-            Throwable exception = task.getException();
-            AlertHandler.showAlert(
-                    Alert.AlertType.ERROR,
-                    "Error",
-                    "Unexpected Error",
-                    "An error occurred while executing the algorithm\n" +
-                            "Code error: " + exception.getMessage()
-
-            );
-            executeButton.setDisable(false);
-        });
-        return task;
+    @Override
+    public void clear() {
+        seedMSMTextField.clear();
+        iterationMSMTextField.clear();
     }
 }
