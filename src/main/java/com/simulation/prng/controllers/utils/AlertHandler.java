@@ -1,4 +1,4 @@
-package com.simulation.prng.controllers;
+package com.simulation.prng.controllers.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

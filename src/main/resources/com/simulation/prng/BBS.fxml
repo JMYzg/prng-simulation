@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="159.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.BBSController">
+<VBox prefHeight="159.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.algorithms.BBSController">
     <opaqueInsets>
         <Insets />
     </opaqueInsets>
