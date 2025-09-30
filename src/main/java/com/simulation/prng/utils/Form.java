@@ -8,7 +8,7 @@ public enum Form {
     MCG("Congruencial Multiplicativo", "/com/simulation/prng/MCG.fxml"),
     ACG("Congruencial Aditivo", "/com/simulation/prng/ACG.fxml"),
     QCG("Congruencial Cuadrático", "/com/simulation/prng/QCG.fxml"),
-    BBS("Blum, Blum y Shub", "/com/simulation/prng/BSS.fxml");
+    BBS("Blum, Blum y Shub", "/com/simulation/prng/BBS.fxml");
 
     final String title;
     final String fxml;

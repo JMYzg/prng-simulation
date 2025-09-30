@@ -1,4 +1,4 @@
-package com.simulation.prng.controllers.utils;
+package com.simulation.prng.utils;
 
 import javafx.concurrent.Task;
 

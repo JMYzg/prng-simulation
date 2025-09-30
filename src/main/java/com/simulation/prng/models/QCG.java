@@ -1,17 +1,18 @@
 package com.simulation.prng.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class QCG {
 
-    public static List<Long> generate(long seed, long a, long b, long c, long modulus, int iterations) {
-
-        List<Long> sequence = new ArrayList<>();
+    public static List<Double> generate(long seed, long a, long b, long c, long modulus) {
+        List<Double> sequence = new ArrayList<>();
+        HashSet<Long> uniques = new HashSet<>();
 
         long current = seed;
 
-        for (int i = 0; i < iterations; i++) {
+        while (true) {
             long squared = current * current;
 
             long A = a * squared;
@@ -21,7 +22,8 @@ public class QCG {
 
             if (current < 0) current += modulus;
 
-            sequence.add(current);
+            if (uniques.add(current)) sequence.add((double) current);
+            else break;
         }
 
         return sequence;

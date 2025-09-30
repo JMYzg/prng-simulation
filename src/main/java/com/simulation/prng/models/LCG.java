@@ -1,20 +1,40 @@
 package com.simulation.prng.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.simulation.prng.utils.templates.AlgorithmTemplate;
 
-public class LCG {
+public class LCG extends AlgorithmTemplate {
 
-    public static List<Long> generate(long seed, long multiplier, long increment, long modulus, int iterations) {
+    private final long seed;
+    private final long multiplier;
+    private final long increment;
+    private final long modulus;
 
-        List<Long> sequence = new ArrayList<>();
-        long current = seed;
+    private long current;
 
-        for (int i = 0; i < iterations; i++) {
-            current = (multiplier * current + increment) % modulus;
-            sequence.add(current);
-        }
+    public LCG(long seed, long multiplier, long increment, long modulus) {
+        this.seed = seed;
+        this.multiplier = multiplier;
+        this.increment = increment;
+        this.modulus = modulus;
+    }
 
-        return sequence;
+    @Override
+    protected void initialize() {
+        this.current = this.seed;
+    }
+
+    @Override
+    protected long next() {
+        return (this.multiplier * this.current + this.increment) % modulus;
+    }
+
+    @Override
+    protected long divisor() {
+        return modulus - 1;
+    }
+
+    @Override
+    protected void update(long next) {
+
     }
 }

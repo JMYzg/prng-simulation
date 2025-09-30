@@ -1,0 +1,4 @@
+1. Completar validación de QCG, BBS, ACG, MCG, etc. ?
+2. Cargar el ciclo de vida en el label correspondiente
+3. Arreglar algoritmo de MCG.
+4. Linear hacia abajo no funcionan (algoritmo)

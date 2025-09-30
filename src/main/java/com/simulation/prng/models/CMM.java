@@ -1,35 +1,41 @@
 package com.simulation.prng.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.simulation.prng.utils.templates.AlgorithmTemplate;
+import com.simulation.prng.utils.Pattern;
 
-public class CMM {
+public class CMM extends AlgorithmTemplate {
 
-    public static List<Long> generate(long constant, long seed, int iterations) {
+    private final long seed;
+    private final long constant;
 
-        List<Long> sequence = new ArrayList<>();
+    private long current;
+    private int length;
+    private String format;
 
-        long current = seed;
-        int length = String.valueOf(current).length();
+    public CMM(long seed, long constant) {
+        this.seed = seed;
+        this.constant = constant;
+    }
 
-        String format = "%0"+ (2 + length) + "d";
+    @Override
+    protected void initialize() {
+        this.current = this.seed;
+        this.length = String.valueOf(this.current).length();
+        this.format = "%0"+ (2 * this.length) + "d";
+    }
 
-        for (int i = 0; i < iterations; i++) {
-            long product = constant * current;
+    @Override
+    protected long next() {
+        return Pattern.apply(current, constant, length, format);
+    }
 
-            String formatted = String.format(format, product);
+    @Override
+    protected long divisor() {
+        return (long) Math.pow(10, this.length);
+    }
 
-            int start = length / 2;
-            int end = start + length;
-
-            String middle = formatted.substring(start, end);
-
-            long random = Long.parseLong(middle);
-
-            sequence.add(random);
-
-            current = random;
-        }
-        return sequence;
+    @Override
+    protected void update(long next) {
+        current = next;
     }
 }

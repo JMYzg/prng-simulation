@@ -1,38 +1,39 @@
 package com.simulation.prng.models;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import com.simulation.prng.utils.templates.AlgorithmTemplate;
+import com.simulation.prng.utils.Pattern;
 
-public class MSM {
+public class MSM extends AlgorithmTemplate {
 
-    public static List<Double> generate(long seed, int iterations) {
+    private final long seed;
 
-        List<Double> sequence = new ArrayList<>();
-        HashSet<Double> set = new HashSet<>();
+    private long current;
+    private int length;
+    private String format;
 
-        long current = seed;
-        int length = String.valueOf(current).length();
-        long divisor = (long) Math.pow(10, length);
-        boolean iterate = true;
+    public MSM(long seed) {
+        this.seed = seed;
+    }
 
-        String format = "%0"+ (2 + length) + "d";
+    @Override
+    protected void initialize() {
+        this.current = this.seed;
+        this.length = String.valueOf(this.current).length();
+        this.format = "%0"+ (2 * this.length) + "d";
+    }
 
-        while (iterate) {
-            long squared = current * current;
+    @Override
+    protected long next() {
+        return Pattern.apply(current, current, length, format);
+    }
 
-            String formatted = String.format(format, squared);
+    @Override
+    protected long divisor() {
+        return (long) Math.pow(10, this.length);
+    }
 
-            int start = length / 2;
-            int end = start + length;
-
-            String middle = formatted.substring(start, end);
-
-            current = Long.parseLong(middle);
-
-            sequence.add((double) current / divisor);
-
-        }
-        return sequence;
+    @Override
+    protected void update(long next) {
+        this.current = next;
     }
 }

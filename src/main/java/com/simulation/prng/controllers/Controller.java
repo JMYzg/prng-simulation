@@ -1,7 +1,7 @@
 package com.simulation.prng.controllers;
 
-import com.simulation.prng.controllers.utils.AlertHandler;
-import com.simulation.prng.controllers.utils.Algorithm;
+import com.simulation.prng.utils.AlertHandler;
+import com.simulation.prng.utils.ControllerStructure;
 import com.simulation.prng.utils.Form;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,7 +34,7 @@ public class Controller implements Initializable {
     @FXML
     public ListView<Double> listView;
 
-    private Algorithm algorithm;
+    private ControllerStructure controllerStructure;
 
     Consumer<ObservableList<Double>> success = (result) -> {
         listView.setItems(result);
@@ -78,21 +78,21 @@ public class Controller implements Initializable {
         comboBox.getSelectionModel().select(0);
 
         executeButton.setOnAction((ActionEvent event) -> {
-            if(algorithm != null) algorithm.execute();
+            if(controllerStructure != null) controllerStructure.execute();
         });
 
         clearButton.setOnAction((ActionEvent event) -> {
-            if(algorithm != null) algorithm.clear();
+            if(controllerStructure != null) controllerStructure.clear();
         });
     }
 
     public void loadPage(String path) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(path));
         Node node = fxmlLoader.load();
 
-        algorithm = fxmlLoader.getController();
-        algorithm.setSharedComponents(this.executeButton, this.success, this.failure);
+        controllerStructure = fxmlLoader.getController();
+        controllerStructure.setSharedComponents(this.executeButton, this.success, this.failure);
 
         borderPane.setCenter(node);
     }

@@ -1,39 +1,44 @@
 package com.simulation.prng.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.simulation.prng.utils.templates.AlgorithmTemplate;
+import com.simulation.prng.utils.Pattern;
 
-public class MPM {
+public class MPM extends AlgorithmTemplate {
 
-    public static List<Double> generate(long seed1, long seed2, int iterations) {
-        List<Double> sequence = new ArrayList<>();
+    private final long seed1;
+    private final long seed2;
 
-        long current1 = seed1;
-        long current2 = seed2;
+    private long current1;
+    private long current2;
+    private int length;
+    private String format;
 
-        // both seeds need to match
-        int length = String.valueOf(current1).length();
-        long divisor = (long) Math.pow(10, length);
+    public MPM(long seed1, long seed2) {
+        this.seed1 = seed1;
+        this.seed2 = seed2;
+    }
 
-        String format = "%0"+ (2 + length) + "d";
+    @Override
+    protected void initialize() {
+        this.current1 = seed1;
+        this.current2 = seed2;
+        this.length = String.valueOf(this.current1).length();
+        this.format = "%0"+ (2 * this.length) + "d";
+    }
 
-        for (int i = 0; i < iterations; i++) {
-            long product = current1 * current2;
+    @Override
+    protected long next() {
+        return Pattern.apply(current1, current2, length, format);
+    }
 
-            String formatted = String.format(format, product);
+    @Override
+    protected long divisor() {
+        return (long) Math.pow(10, this.length);
+    }
 
-            int start = length / 2;
-            int end = start + length;
-
-            String middle = formatted.substring(start, end);
-
-            long next = Long.parseLong(middle);
-
-            sequence.add((double) next / divisor);
-
-            current1 = current2;
-            current2 = next;
-        }
-        return sequence;
+    @Override
+    protected void update(long next) {
+        this.current1 = this.current2;
+        this.current2 = next;
     }
 }

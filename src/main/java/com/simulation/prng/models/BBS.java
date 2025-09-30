@@ -1,21 +1,40 @@
 package com.simulation.prng.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.simulation.prng.utils.templates.AlgorithmTemplate;
 
-public class BBS {
+public class BBS extends AlgorithmTemplate {
 
-    public static List<Long> generate(long seed, long p, long q, int iterations) {
+    private final long seed;
+    private final long p;
+    private final long q;
+    private long modulus;
 
-        List<Long> sequence = new ArrayList<>();
-        long modulus = p * q;
+    private long current;
 
-        for (int i = 0; i < iterations; i++) {
-            long current = (seed * seed) % modulus;
+    public BBS(long seed, long p, long q) {
+        this.seed = seed;
+        this.p = p;
+        this.q = q;
+    }
 
-            sequence.add(current);
-            seed = current;
-        }
-        return sequence;
+    @Override
+    protected void initialize() {
+        this.current = this.seed;
+        this.modulus = p * q;
+    }
+
+    @Override
+    protected long next() {
+        return (this.current * this.current) % this.modulus;
+    }
+
+    @Override
+    protected long divisor() {
+        return this.modulus - 1;
+    }
+
+    @Override
+    protected void update(long next) {
+        this.current = next;
     }
 }

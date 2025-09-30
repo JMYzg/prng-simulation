@@ -1,25 +1,29 @@
 package com.simulation.prng.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ACG {
 
-    public static List<Long> generate(List<Long> seeds, long modulus, int iterations) {
-
+    public static List<Double> generate(List<Long> seeds, long modulus) {
         List<Long> sequence = new ArrayList<>(seeds);
+        HashSet<Long> uniques = new HashSet<>();
+
         int k = seeds.size();
 
-        for (int i = 0; i < iterations; i++) {
+        while (true) {
             int n = sequence.size();
 
             long term1 = sequence.get(n - 1);
             long term2 = sequence.get(n - k);
             long current = (term1 + term2) % modulus;
 
-            sequence.add(current);
+            if (uniques.add(current)) sequence.add(current / modulus - 1);
+             else break;
         }
 
-        return sequence;
+        return sequence.stream().map(Long::doubleValue).collect(Collectors.toList());
     }
 }

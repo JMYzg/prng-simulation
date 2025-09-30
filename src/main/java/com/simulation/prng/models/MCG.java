@@ -1,20 +1,38 @@
 package com.simulation.prng.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.simulation.prng.utils.templates.AlgorithmTemplate;
 
-public class MCG {
+public class MCG extends AlgorithmTemplate {
 
-    public static List<Long> generate(long seed, long multiplier, long modulus, int iterations) {
+    private final long seed;
+    private final long multiplier;
+    private final long modulus;
 
-        List<Long> sequence = new ArrayList<>();
-        long current = seed;
+    private long current;
 
-        for (int i = 0; i < iterations; i++) {
-            current = (multiplier * current) % modulus;
-            sequence.add(current);
-        }
+    public MCG(long seed, long multiplier, long modulus) {
+        this.seed = seed;
+        this.multiplier = multiplier;
+        this.modulus = modulus;
+    }
 
-        return sequence;
+    @Override
+    protected void initialize() {
+        this.current = this.seed;
+    }
+
+    @Override
+    protected long next() {
+        return (this.multiplier * this.current) % modulus;
+    }
+
+    @Override
+    protected long divisor() {
+        return modulus - 1;
+    }
+
+    @Override
+    protected void update(long next) {
+
     }
 }
