@@ -1,0 +1,104 @@
+.button {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+
+    -fx-background-color: #827085;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 50;
+
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.1, 0, 2);
+ }
+ #button2{
+   -fx-background-color: #8ebe94;
+ }
+ #button3{
+   -fx-background-color: #4e395d;
+ }
+ #Menu {
+   -fx-color: #4e395d;
+ }
+
+ .text-field {
+     -fx-background-color: white;
+     -fx-border-color: #cccccc;
+     -fx-border-width: 1px;
+     -fx-border-radius: 5;
+     -fx-background-radius: 5;
+     -fx-padding: 8px 10px;
+     -fx-font-size: 14px;
+
+     -fx-text-fill: #333333;
+ }
+
+ .text-field:hover {
+     -fx-border-color: #999999;
+ }
+
+ .text-field:focused {
+     -fx-border-color: #6a5acd;
+     -fx-border-width: 2px;
+ }
+
+ .combo-box {
+     -fx-background-color: #f0f0f0;
+     -fx-border-color: #cccccc;
+     -fx-border-radius: 5;
+     -fx-background-radius: 5;
+     -fx-font-size: 14px;
+     -fx-pref-height: 35px;
+ }
+
+ /* Estilo para el área de texto (donde se muestra la selección) */
+ .combo-box .list-cell {
+     -fx-text-fill: #333333;
+ }
+
+
+ .combo-box:hover {
+     -fx-border-color: #999999; /* Oscurece ligeramente el borde */
+ }
+
+ .combo-box:focused {
+     -fx-border-color: #6a5acd;
+     -fx-border-width: 2px;
+ }
+
+ /* Flecha de despliegue */
+ .combo-box .arrow-button {
+     -fx-background-color: transparent;
+ }
+
+ .combo-box .arrow {
+     -fx-background-color: #6a5acd;
+ }
+
+ .list-view {
+     -fx-background-color: white;
+     -fx-border-color: #dddddd;
+     -fx-border-width: 1px;
+     -fx-border-radius: 8;
+     -fx-background-radius: 8;
+     -fx-padding: 0;
+ }
+
+ .list-view .virtual-flow .clipped-container .sheet .list-cell {
+     -fx-background-color: transparent;
+     -fx-border-color: transparent;
+     -fx-padding: 10px 15px;
+     -fx-font-size: 14px;
+ }
+
+
+ .list-cell:filled:hover {
+     -fx-background-color: #f0f0f0;
+ }
+
+
+ .list-cell:filled:selected {
+     -fx-background-color: #e6e6fa;
+     -fx-text-fill: #333333;
+ }
+

@@ -15,13 +15,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="600.0" stylesheets="@../styles/stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.Controller">
     <BorderPane fx:id="borderPane" layoutY="24.0" prefHeight="489.0" prefWidth="601.0">
       <bottom>
-          <VBox prefHeight="276.0" prefWidth="609.0" spacing="5.0" BorderPane.alignment="CENTER">
+          <VBox alignment="CENTER" prefHeight="309.0" prefWidth="601.0" spacing="5.0" BorderPane.alignment="CENTER">
               <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </padding>
+            <Label id="ciclo" fx:id="ciclo" text="Label">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
               <Separator prefWidth="200.0">
                  <VBox.margin>
                      <Insets right="10.0" />
@@ -29,11 +34,11 @@
               </Separator>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
                <buttons>
-                  <Button fx:id="executeButton" mnemonicParsing="false" text="Excecute" />
-                    <Button fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveData" text="Save Data (.CSV)" />
+                  <Button id="button2" fx:id="executeButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" text="Excecute" />
+                    <Button id="button3" fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveData" prefHeight="30.0" text="Save Data (.CSV)" />
                </buttons>
             </ButtonBar>
-            <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="listView" prefHeight="197.0" prefWidth="581.0" />
           </VBox>
       </bottom>
       <top>
@@ -50,13 +55,13 @@
               <BorderPane.margin>
                   <Insets left="10.0" right="10.0" />
               </BorderPane.margin>
-              <Label alignment="CENTER" prefHeight="27.0" prefWidth="104.0" text="Menu" textAlignment="CENTER" GridPane.columnIndex="1">
+              <Label id="Menu" alignment="CENTER" prefHeight="27.0" prefWidth="104.0" text="Menu" textAlignment="CENTER" GridPane.columnIndex="1">
                  <font>
-                     <Font name="System Bold" size="18.0" />
+                     <Font name="Yu Gothic UI Semibold" size="24.0" />
                  </font>
               </Label>
-              <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="244.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-              <Button fx:id="clearButton" mnemonicParsing="false" text="Clear" GridPane.rowIndex="1" />
+              <ComboBox fx:id="comboBox" prefHeight="30.0" prefWidth="244.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+              <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="76.0" text="Clear" GridPane.rowIndex="1" />
           </GridPane>
       </top>
     </BorderPane>
