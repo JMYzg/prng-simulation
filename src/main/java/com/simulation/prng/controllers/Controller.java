@@ -91,8 +91,8 @@ public class Controller implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
         Node node = fxmlLoader.load();
 
-        algorithm = fxmlLoader.getController();
-        algorithm.setSharedComponents(this.executeButton, this.success, this.failure);
+//        algorithm = fxmlLoader.getController();
+//        algorithm.setSharedComponents(this.executeButton, this.success, this.failure);
 
         borderPane.setCenter(node);
     }
