@@ -33,6 +33,6 @@ public class MCG extends AlgorithmTemplate {
 
     @Override
     protected void update(long next) {
-
+        this.current = next;
     }
 }

@@ -35,6 +35,6 @@ public class LCG extends AlgorithmTemplate {
 
     @Override
     protected void update(long next) {
-
+        this.current = next;
     }
 }
