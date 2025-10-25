@@ -8,53 +8,69 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="257.0" spacing="24.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.tests.testsController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="338.0" spacing="24.0" style="-fx-background-color: #e8f0d5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.tests.testsController">
    <children>
-      <Label text="Testing">
+      <Label style="-fx-text-fill: #3f5133;" text="Testing">
          <font>
-            <Font name="Arial Rounded MT Bold" size="14.0" />
+            <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Label>
-      <VBox prefHeight="15.0" prefWidth="237.0">
+
+      <VBox prefHeight="15.0" prefWidth="237.0" style="-fx-background-color: #b9c97a; -fx-background-radius: 8; -fx-padding: 8;">
          <children>
-            <Label text="Statistics">
+            <Label style="-fx-text-fill: #3f5133;" text="Statistics">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <GridPane prefHeight="30.0" prefWidth="237.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+
+      <GridPane hgap="10.0" prefHeight="30.0" prefWidth="237.0" style="-fx-background-color: #f5f9ed; -fx-background-radius: 8; -fx-padding: 10;" vgap="8.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <Label text="Media:" GridPane.rowIndex="1">
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Media:" GridPane.rowIndex="1">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>
             </Label>
-            <Label text="Varianza:" GridPane.rowIndex="2" />
-            <Label fx:id="meanLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="varianceLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Varianza:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="meanLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="varianceLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
-      <VBox prefHeight="15.0" prefWidth="237.0">
+
+      <VBox prefHeight="15.0" prefWidth="237.0" style="-fx-background-color: #b9c97a; -fx-background-radius: 8; -fx-padding: 8;">
          <children>
-            <Label text="Uniformity">
+            <Label style="-fx-text-fill: #3f5133;" text="Uniformity">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <GridPane prefHeight="15.0" prefWidth="237.0">
+
+      <GridPane hgap="10.0" prefHeight="15.0" prefWidth="237.0" style="-fx-background-color: #f5f9ed; -fx-background-radius: 8; -fx-padding: 10;" vgap="8.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -64,20 +80,30 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Chi cuadrada:" GridPane.rowIndex="1" />
-            <Label fx:id="chiSquareLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Chi cuadrada:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="chiSquareLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
-      <VBox prefHeight="15.0" prefWidth="237.0">
+
+      <VBox prefHeight="15.0" prefWidth="237.0" style="-fx-background-color: #b9c97a; -fx-background-radius: 8; -fx-padding: 8;">
          <children>
-            <Label text="Randomness">
+            <Label style="-fx-text-fill: #3f5133;" text="Randomness">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <GridPane prefHeight="30.0" prefWidth="237.0">
+
+      <GridPane hgap="10.0" prefHeight="30.0" prefWidth="237.0" style="-fx-background-color: #f5f9ed; -fx-background-radius: 8; -fx-padding: 10;" vgap="8.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -88,22 +114,40 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="corridas arriba/abajo:" GridPane.rowIndex="1" />
-            <Label fx:id="runsLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Longitud de corridas:" GridPane.rowIndex="2" />
-            <Label fx:id="runsLengthLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Corridas arriba/abajo:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="runsLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Longitud de corridas:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="runsLengthLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
-      <VBox prefHeight="15.0" prefWidth="237.0">
+
+      <VBox prefHeight="15.0" prefWidth="237.0" style="-fx-background-color: #b9c97a; -fx-background-radius: 8; -fx-padding: 8;">
          <children>
-            <Label text="Independence">
+            <Label style="-fx-text-fill: #3f5133;" text="Independence">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <GridPane prefHeight="30.0" prefWidth="237.0">
+
+      <GridPane hgap="10.0" prefHeight="30.0" prefWidth="237.0" style="-fx-background-color: #f5f9ed; -fx-background-radius: 8; -fx-padding: 10;" vgap="8.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -114,10 +158,26 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Prueba de huecos:" GridPane.rowIndex="1" />
-            <Label text="Prueba de póker:" GridPane.rowIndex="2" />
-            <Label fx:id="gapsLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="pokerLabel" text="..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Prueba de huecos:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label style="-fx-text-fill: #526a3f; -fx-font-weight: bold;" text="Prueba de póker:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="gapsLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="pokerLabel" style="-fx-text-fill: #3f5133;" text="..." GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

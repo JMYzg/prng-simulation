@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,7 +34,6 @@ public class Controller implements Initializable {
     @FXML
     public Button
             clearButton,
-            saveDataButton,
             executeButton,
             testsButton;
 
@@ -96,28 +96,46 @@ public class Controller implements Initializable {
         });
 
         testsButton.setOnAction((ActionEvent event) -> {
-            if (controllerStructure != null) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource(testsController.PATH));
-                try {
-                    Node node = fxmlLoader.load();
-                    Scene scene = new Scene((Parent) node);
+            // Validar que hay resultados disponibles
+            if (testsController.results == null || testsController.results.isEmpty()) {
+                AlertHandler.showAlert(
+                        Alert.AlertType.WARNING,
+                        "Warning",
+                        "No data available",
+                        "Please execute an algorithm first to generate data."
+                );
+                return;
+            }
 
-                    Stage stage = new Stage();
-                    stage.setTitle("Tests");
-                    stage.setScene(scene);
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(testsController.PATH));
+            try {
+                Parent root = fxmlLoader.load();
 
-                    System.out.println("hola");
-                    stage.showAndWait();
-                } catch (IOException e) {
-                    AlertHandler.showAlert(
-                            Alert.AlertType.ERROR,
-                            "Error",
-                            "Unexpected error",
-                            "An error occurred trying to load the fxml file\n" +
-                                    "Code error: " + e.getMessage()
-                    );
-                }
+                // IMPORTANTE: Obtener el controlador DESPUÉS de load()
+                testsController controller = fxmlLoader.getController();
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Statistical Tests");
+                stage.setScene(scene);
+
+                Stage ownerStage = (Stage) testsButton.getScene().getWindow();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(ownerStage);
+                stage.setResizable(false);
+
+                // Los labels ya se actualizan automáticamente en initialize()
+                stage.showAndWait();
+
+            } catch (IOException e) {
+                AlertHandler.showAlert(
+                        Alert.AlertType.ERROR,
+                        "Error",
+                        "Unexpected error",
+                        "An error occurred trying to load the tests window\n" +
+                                "Code error: " + e.getMessage()
+                );
             }
         });
 
@@ -137,9 +155,6 @@ public class Controller implements Initializable {
         VBox vbox = (VBox) center;
         vbox.getChildren().clear();
         vbox.getChildren().add(node);
-    }
-
-    public void saveData(ActionEvent actionEvent) {
     }
 }
 
