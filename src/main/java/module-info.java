@@ -7,6 +7,7 @@ module com.simulation.prng {
     requires javafx.graphics;
     requires javafx.base;
     requires commons.math3;
+    requires jdk.compiler;
 
     opens com.simulation.prng to javafx.fxml;
     exports com.simulation.prng;
