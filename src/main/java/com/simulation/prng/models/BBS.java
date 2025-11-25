@@ -12,6 +12,9 @@ public class BBS extends AlgorithmTemplate {
     private long current;
 
     public BBS(long seed, long p, long q) {
+        if (p % 4 != 3 || q % 4 != 3) {
+            throw new IllegalArgumentException();
+        }
         this.seed = seed;
         this.p = p;
         this.q = q;

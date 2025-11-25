@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="130.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.algorithms.MCGController">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="Seed" textFill="#00000080">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="seedMCGTextField" prefHeight="25.0" prefWidth="521.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="Multiplier" textFill="#00000080">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font></Label>
+            <TextField fx:id="multiplierMCGTextField" prefHeight="25.0" prefWidth="521.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="Modulus" textFill="#00000080">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font></Label>
+            <TextField fx:id="modulusMCGTextField" prefHeight="25.0" prefWidth="521.0" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

@@ -13,6 +13,7 @@ public class Application extends javafx.application.Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Pseudo Random Number Generator - Simulation");
         stage.setScene(scene);
+        stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
     }
 

@@ -1,0 +1,193 @@
+/* ============================================
+   PALETA DE COLORES RETRO VERDE
+   - Fondos: tonos claros (#b9c97a, #8aae5a)
+   - Texto: tonos oscuros (#3f5133, #526a3f)
+   - Primario: #8aae5a (verde medio)
+   - Secundario: #6e8b4b (verde oliva)
+   ============================================ */
+
+/* ROOT - Fondo general de la aplicación */
+.root {
+    -fx-background-color: #e8f0d5; /* Tono muy claro derivado de la paleta */
+}
+
+/* BOTONES */
+.button {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+
+    -fx-background-color: #8aae5a; /* Verde primario */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 50;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.1, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: #6e8b4b; /* Verde más oscuro al pasar el mouse */
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #526a3f; /* Aún más oscuro al presionar */
+}
+
+/* Botón Execute (verde más vibrante) */
+#button2 {
+    -fx-background-color: #b9c97a; /* Verde claro vibrante */
+    -fx-text-fill: #3f5133; /* Texto oscuro para contraste */
+}
+
+#button2:hover {
+    -fx-background-color: #8aae5a;
+    -fx-text-fill: white;
+}
+
+/* Botón Save Data (verde secundario) */
+#button3 {
+    -fx-background-color: #6e8b4b; /* Verde oliva secundario */
+}
+
+#button3:hover {
+    -fx-background-color: #526a3f;
+}
+
+/* MENU */
+#Menu {
+    -fx-color: #526a3f; /* Verde oscuro */
+}
+
+/* TEXT FIELDS */
+.text-field {
+    -fx-background-color: #f5f9ed; /* Fondo muy claro verdoso */
+    -fx-border-color: #b9c97a; /* Borde verde claro */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8px 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #3f5133; /* Texto verde oscuro */
+}
+
+.text-field:hover {
+    -fx-border-color: #8aae5a; /* Verde medio al hover */
+}
+
+.text-field:focused {
+    -fx-border-color: #6e8b4b; /* Verde oliva al focus */
+    -fx-border-width: 2px;
+}
+
+/* COMBO BOX */
+.combo-box {
+    -fx-background-color: #f5f9ed; /* Fondo claro verdoso */
+    -fx-border-color: #b9c97a;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-pref-height: 35px;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #3f5133; /* Texto verde oscuro */
+}
+
+.combo-box:hover {
+    -fx-border-color: #8aae5a;
+}
+
+.combo-box:focused {
+    -fx-border-color: #6e8b4b;
+    -fx-border-width: 2px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #6e8b4b; /* Flecha verde oliva */
+}
+
+/* LIST VIEW */
+.list-view {
+    -fx-background-color: #f5f9ed; /* Fondo claro verdoso */
+    -fx-border-color: #b9c97a;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 0;
+}
+
+.list-view .virtual-flow .clipped-container .sheet .list-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 10px 15px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #3f5133; /* Texto verde oscuro */
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #e8f0d5; /* Verde muy claro al hover */
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #b9c97a; /* Verde claro al seleccionar */
+    -fx-text-fill: #3f5133; /* Texto oscuro */
+}
+
+/* LABELS */
+.label {
+    -fx-text-fill: #3f5133; /* Texto verde oscuro por defecto */
+}
+
+#ciclo {
+    -fx-text-fill: #526a3f; /* Verde medio oscuro para labels especiales */
+}
+
+/* SEPARATOR */
+.separator .line {
+    -fx-border-color: #b9c97a; /* Línea verde claro */
+    -fx-background-color: #b9c97a;
+}
+
+/* BUTTON BAR */
+.button-bar {
+    -fx-background-color: transparent;
+}
+
+/* VBox y HBox de contenedores */
+.vbox, .hbox {
+    -fx-background-color: transparent;
+}
+
+/* BorderPane */
+.border-pane {
+    -fx-background-color: #e8f0d5; /* Fondo general claro */
+}
+
+/* SCROLL BAR (para ListView) */
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #8aae5a; /* Verde primario */
+    -fx-background-radius: 5;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #e8f0d5; /* Fondo claro */
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: #b9c97a;
+}
+
+/* Estilos adicionales para consistencia */
+.titled-pane > .title {
+    -fx-background-color: #8aae5a;
+    -fx-text-fill: white;
+}
+
+.titled-pane > .content {
+    -fx-background-color: #f5f9ed;
+}

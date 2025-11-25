@@ -9,7 +9,7 @@ public class ACG {
 
     public static List<Double> generate(List<Long> seeds, long modulus) {
         List<Long> sequence = new ArrayList<>(seeds);
-        HashSet<Long> uniques = new HashSet<>();
+        HashSet<Long> uniques = new HashSet<>(seeds);
 
         int k = seeds.size();
 
@@ -20,10 +20,13 @@ public class ACG {
             long term2 = sequence.get(n - k);
             long current = (term1 + term2) % modulus;
 
-            if (uniques.add(current)) sequence.add(current / modulus - 1);
-             else break;
+            if (uniques.add(current)) sequence.add(current);
+            else break;
         }
 
-        return sequence.stream().map(Long::doubleValue).collect(Collectors.toList());
+        return sequence.stream()
+                .skip(seeds.size())
+                .map(n -> (double) n / (modulus - 1))
+                .collect(Collectors.toList());
     }
 }

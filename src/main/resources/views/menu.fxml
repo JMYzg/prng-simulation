@@ -9,60 +9,77 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="600.0" stylesheets="@../styles/stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.Controller">
-    <BorderPane fx:id="borderPane" layoutY="24.0" prefHeight="489.0" prefWidth="601.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="600.0" stylesheets="@../styles/stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.Controller">
+    <BorderPane fx:id="borderPane" prefHeight="555.0" prefWidth="600.0">
       <bottom>
-          <VBox alignment="CENTER" prefHeight="309.0" prefWidth="601.0" spacing="5.0" BorderPane.alignment="CENTER">
+          <VBox alignment="CENTER" prefHeight="278.0" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
               <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </padding>
-            <Label id="ciclo" fx:id="ciclo" text="Label">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="12.0" />
-               </font>
-            </Label>
-              <Separator prefWidth="200.0">
-                 <VBox.margin>
-                     <Insets right="10.0" />
-                 </VBox.margin>
-              </Separator>
+            <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="581.0" spacing="2.0">
+               <children>
+                  <Label id="ciclo" text="Life Cycle:">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lifeCycleLabel" prefHeight="10.0" prefWidth="89.0">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
                <buttons>
-                  <Button id="button2" fx:id="executeButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" text="Excecute" />
-                    <Button id="button3" fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveData" prefHeight="30.0" text="Save Data (.CSV)" />
+                  <Button fx:id="testsButton" mnemonicParsing="false" prefHeight="40.0" text="Show Tests" />
+                    <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="76.0" text="Clear Fields" />
+                  <Button id="button2" fx:id="executeButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Excecute" />
                </buttons>
             </ButtonBar>
-            <ListView fx:id="listView" prefHeight="197.0" prefWidth="581.0" />
+            <ListView fx:id="listView" prefHeight="190.0" prefWidth="387.0" />
           </VBox>
       </bottom>
       <top>
-          <GridPane prefHeight="60.0" prefWidth="557.0" BorderPane.alignment="BOTTOM_LEFT">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="246.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="198.0" minWidth="10.0" prefWidth="101.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="10.0" prefWidth="234.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <BorderPane.margin>
-                  <Insets left="10.0" right="10.0" />
-              </BorderPane.margin>
-              <Label id="Menu" alignment="CENTER" prefHeight="27.0" prefWidth="104.0" text="Menu" textAlignment="CENTER" GridPane.columnIndex="1">
-                 <font>
-                     <Font name="Yu Gothic UI Semibold" size="24.0" />
-                 </font>
-              </Label>
-              <ComboBox fx:id="comboBox" prefHeight="30.0" prefWidth="244.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-              <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="76.0" text="Clear" GridPane.rowIndex="1" />
-          </GridPane>
+         <VBox prefHeight="84.0" prefWidth="601.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+               <VBox alignment="CENTER" prefHeight="52.0" prefWidth="601.0">
+                  <children>
+                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="424.0" text="Pseudo Random Number Generator">
+                        <font>
+                           <Font name="System Bold" size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <Separator prefHeight="5.0" prefWidth="551.0" />
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <VBox prefHeight="49.0" prefWidth="240.0" spacing="3.0">
+                        <children>
+                           <Label text="Algorithm" textFill="#0000007f">
+                              <font>
+                                 <Font name="Arial Rounded MT Bold" size="12.0" />
+                              </font>
+                           </Label>
+                           <ComboBox fx:id="comboBox" prefHeight="31.0" prefWidth="244.0" />
+                        </children>
+                     </VBox>
+                  </children>
+               </HBox>
+            </children>
+            <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+         </VBox>
       </top>
+      <center>
+         <VBox alignment="CENTER" maxHeight="130.0" minHeight="130.0" prefHeight="130.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      </center>
     </BorderPane>
 </AnchorPane>

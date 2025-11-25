@@ -54,6 +54,7 @@ public class ACGController implements ControllerStructure {
         }
 
         List<Long> seeds = new ArrayList<>(Objects.requireNonNull(Validator.parseCSVFormat(seedsText)));
+        System.out.println(seeds);
         long modulus = Long.parseLong(modulusText);
 
         if (seeds.isEmpty()) return;
