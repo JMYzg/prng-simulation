@@ -40,6 +40,7 @@
                   <Button fx:id="testsButton" mnemonicParsing="false" prefHeight="40.0" text="Show Tests" />
                     <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="76.0" text="Clear Fields" />
                   <Button id="button2" fx:id="executeButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Excecute" />
+                  <Button fx:id="variablesButton" mnemonicParsing="false" prefHeight="40.0" text="Random Variables" />
                </buttons>
             </ButtonBar>
             <ListView fx:id="listView" prefHeight="190.0" prefWidth="387.0" />

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" styleClass="border-pane" stylesheets="@../styles/stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simulation.prng.controllers.variables.RandomVariablesController">
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+    </padding>
+
+    <!-- TOP: Distribution Selection -->
+    <top>
+        <VBox spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="label-header" text="Select Distribution Type" textFill="#3f5133">
+                                    <font>
+                                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="cbDistribution" maxWidth="Infinity" prefHeight="35.0" promptText="Choose a distribution..." />
+                            </children>
+                        </VBox>
+                        <!-- Amount input removed as per requirements -->
+                    </children>
+                </HBox>
+                <Separator prefWidth="200.0" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" />
+            </BorderPane.margin>
+        </VBox>
+    </top>
+
+    <!-- CENTER: SplitPane with Input/Stats and Visualization -->
+    <center>
+        <SplitPane dividerPositions="0.37126436781609196" BorderPane.alignment="CENTER">
+            <items>
+                <!-- Left Side: Inputs and Results List -->
+                <VBox spacing="10.0">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                    <children>
+                        <!-- Input Forms StackPane -->
+                        <StackPane fx:id="stackInputForms" minHeight="150.0" prefHeight="185.0" prefWidth="280.0" style="-fx-background-color: f5f9ed; -fx-background-radius: 5; -fx-border-color: b9c97a; -fx-border-radius: 5;">
+                            <children>
+                                
+                                <!-- Uniform Distribution Input Form -->
+                                <VBox fx:id="paneUniform" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Uniform Parameters" />
+                                        <GridPane hgap="10.0" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Min (a):" />
+                                                <TextField fx:id="txtMin" promptText="Minimum value" GridPane.columnIndex="1" />
+                                                <Label text="Max (b):" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtMax" promptText="Maximum value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <!-- Exponential Distribution Input Form -->
+                                <VBox fx:id="paneExponential" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Exponential Parameters" />
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="Lambda (λ):" />
+                                                <TextField fx:id="txtLambda" promptText="Rate parameter" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                
+                                <!-- Normal Distribution Input Form -->
+                                <VBox fx:id="paneNormal" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Normal Parameters" />
+                                        <GridPane hgap="10.0" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Mean (μ):" />
+                                                <TextField fx:id="txtMean" promptText="Mean value" GridPane.columnIndex="1" />
+                                                <Label text="Std Dev (σ):" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtStDev" promptText="Standard Deviation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <!-- Erlang Distribution Input Form -->
+                                <VBox fx:id="paneErlang" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Erlang Parameters" />
+                                        <GridPane hgap="10.0" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Shape (k):" />
+                                                <TextField fx:id="txtErlangK" promptText="Integer shape" GridPane.columnIndex="1" />
+                                                <Label text="Rate (λ):" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtErlangLambda" promptText="Rate parameter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <!-- Bernoulli Distribution Input Form -->
+                                <VBox fx:id="paneBernoulli" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Bernoulli Parameters" />
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="Probability (p):" />
+                                                <TextField fx:id="txtProb" promptText="Success probability (0-1)" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <!-- Poisson Distribution Input Form -->
+                                <VBox fx:id="panePoisson" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Poisson Parameters" />
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="Lambda (λ):" />
+                                                <TextField fx:id="txtPoissonLambda" promptText="Average rate" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                
+                                <!-- Binomial Distribution Input Form -->
+                                <VBox fx:id="paneBinomial" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Binomial Parameters" />
+                                        <GridPane hgap="10.0" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Trials (n):" />
+                                                <TextField fx:id="txtBinomialN" promptText="Number of trials" GridPane.columnIndex="1" />
+                                                <Label text="Prob (p):" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtBinomialP" promptText="Success probability" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <!-- Triangular Distribution Input Form -->
+                                <VBox fx:id="paneTriangular" alignment="CENTER" spacing="15.0" visible="false">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-header" text="Triangular Parameters" />
+                                        <GridPane hgap="10.0" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Min (a):" />
+                                                <TextField fx:id="txtTriA" promptText="Minimum" GridPane.columnIndex="1" />
+                                                <Label text="Max (b):" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtTriB" promptText="Maximum" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Mode (c):" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtTriC" promptText="Mode" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </StackPane>
+
+                        <Separator />
+
+                        <Label styleClass="label-header" text="Generated Values" textFill="#3f5133" />
+                        <ListView fx:id="listResults" prefHeight="174.0" prefWidth="280.0" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+
+                <!-- Right Side: Visualization and Statistics -->
+                <VBox spacing="10.0">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                    <children>
+                        <Label styleClass="label-header" text="Frequency Distribution" textFill="#3f5133" />
+                        <BarChart fx:id="chartHistogram" animated="false" legendVisible="false" title="Histogram" VBox.vgrow="ALWAYS">
+                            <xAxis>
+                                <CategoryAxis label="Range" side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Frequency" side="LEFT" />
+                            </yAxis>
+                        </BarChart>
+
+                        <Separator />
+
+                        <Label styleClass="label-header" text="Statistics" textFill="#3f5133" />
+                        <GridPane hgap="20.0" prefHeight="55.0" prefWidth="541.0" style="-fx-background-color: f5f9ed; -fx-padding: 10; -fx-background-radius: 5; -fx-border-color: b9c97a; -fx-border-radius: 8;" vgap="20.0">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="Mean:" textFill="#2e7d32">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lblMean" text="-" GridPane.columnIndex="1" />
+                                <Label text="Variance:" textFill="#2e7d32" GridPane.columnIndex="2">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lblVariance" text="-" GridPane.columnIndex="3" />
+                                <Label text="Mode:" textFill="#2e7d32" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lblMode" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            </children>
+                        </GridPane>
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+
+    <!-- BOTTOM: Action Buttons -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnSimulate" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="button-action" text="Generate" />
+                <Button fx:id="btnClear" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" text="Clear" />
+            </children>
+            <BorderPane.margin>
+                <Insets top="15.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -32,10 +32,10 @@ public class Controller implements Initializable {
     public ComboBox<Form> comboBox;
 
     @FXML
-    public Button
-            clearButton,
+    public Button clearButton,
             executeButton,
-            testsButton;
+            testsButton,
+            variablesButton;
 
     @FXML
     public ListView<Double> listView;
@@ -58,8 +58,7 @@ public class Controller implements Initializable {
                 "Error",
                 "Unexpected Error",
                 "An error occurred while executing the algorithm\n" +
-                        "Code error: " + exception.getMessage()
-        );
+                        "Code error: " + exception.getMessage());
         executeButton.setDisable(false);
     };
 
@@ -70,7 +69,7 @@ public class Controller implements Initializable {
         comboBox.getItems().setAll(Form.values());
 
         comboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if(newValue != null){
+            if (newValue != null) {
                 try {
                     loadPage(newValue.getFxml());
                 } catch (IOException e) {
@@ -79,8 +78,7 @@ public class Controller implements Initializable {
                             "Error",
                             "Unexpected error",
                             "An error occurred trying to load the fxml file\n" +
-                                    "Code error: " + e.getMessage()
-                    );
+                                    "Code error: " + e.getMessage());
                 }
             }
         });
@@ -88,11 +86,13 @@ public class Controller implements Initializable {
         comboBox.getSelectionModel().select(0);
 
         executeButton.setOnAction((ActionEvent event) -> {
-            if(controllerStructure != null) controllerStructure.execute();
+            if (controllerStructure != null)
+                controllerStructure.execute();
         });
 
         clearButton.setOnAction((ActionEvent event) -> {
-            if(controllerStructure != null) controllerStructure.clear();
+            if (controllerStructure != null)
+                controllerStructure.clear();
         });
 
         testsButton.setOnAction((ActionEvent event) -> {
@@ -101,8 +101,7 @@ public class Controller implements Initializable {
                         Alert.AlertType.WARNING,
                         "Warning",
                         "No data available",
-                        "Please execute an algorithm first to generate data."
-                );
+                        "Please execute an algorithm first to generate data.");
                 return;
             }
 
@@ -131,8 +130,48 @@ public class Controller implements Initializable {
                         "Error",
                         "Unexpected error",
                         "An error occurred trying to load the tests window\n" +
-                                "Code error: " + e.getMessage()
-                );
+                                "Code error: " + e.getMessage());
+            }
+        });
+
+        variablesButton.setOnAction((ActionEvent event) -> {
+            if (testsController.results == null || testsController.results.isEmpty()) {
+                AlertHandler.showAlert(
+                        Alert.AlertType.WARNING,
+                        "Warning",
+                        "No data available",
+                        "Please execute an algorithm first to generate data.");
+                return;
+            }
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/views/RandomVariables.fxml"));
+            try {
+                Parent root = fxmlLoader.load();
+
+                com.simulation.prng.controllers.variables.RandomVariablesController controller = fxmlLoader
+                        .getController();
+                controller.setPseudoRandomNumbers(testsController.results);
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("Random Variables");
+                stage.setScene(scene);
+
+                Stage ownerStage = (Stage) variablesButton.getScene().getWindow();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(ownerStage);
+                stage.setResizable(false);
+
+                stage.showAndWait();
+
+            } catch (IOException e) {
+                AlertHandler.showAlert(
+                        Alert.AlertType.ERROR,
+                        "Error",
+                        "Unexpected error",
+                        "An error occurred trying to load the random variables window\n" +
+                                "Code error: " + e.getMessage());
             }
         });
 
@@ -154,4 +193,3 @@ public class Controller implements Initializable {
         vbox.getChildren().add(node);
     }
 }
-
