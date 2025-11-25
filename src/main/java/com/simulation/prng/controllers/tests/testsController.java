@@ -217,7 +217,7 @@ public class testsController implements Initializable {
             }
         }
 
-        if (gaps.isEmpty() || gaps.size() < 5) {
+        if (gaps.isEmpty() || gaps.size() < 10) {
             return new TestResult(0.0, 0.0, false);
         }
 
@@ -234,6 +234,7 @@ public class testsController implements Initializable {
 
         int n = gaps.size();
         double chiSquare = 0.0;
+        int validCategories = 0;
 
         for (int i = 0; i <= maxGap; i++) {
             double expected;
@@ -245,15 +246,27 @@ public class testsController implements Initializable {
 
             if (expected >= 5) {
                 chiSquare += Math.pow(observed[i] - expected, 2) / expected;
+                validCategories++;
             }
         }
 
-        ChiSquaredDistribution chiDist = new ChiSquaredDistribution(maxGap);
+        return getTestResult(chiSquare, validCategories);
+    }
+
+    private static TestResult getTestResult(double chiSquare, int validCategories) {
+        if (validCategories < 2) {
+            return new TestResult(0.0, 0.0, false);
+        }
+
+        int df = validCategories - 1;
+
+        ChiSquaredDistribution chiDist = new ChiSquaredDistribution(df);
         double pValue = 1.0 - chiDist.cumulativeProbability(chiSquare);
         boolean passed = pValue > ALPHA;
 
         return new TestResult(chiSquare, pValue, passed);
     }
+
 
     private static TestResult calculatePokerTest(double[] data) {
         int k = 5;
@@ -261,6 +274,7 @@ public class testsController implements Initializable {
 
         int numGroups = data.length / k;
 
+        // Validación: Se necesitan al menos 10 grupos para un test significativo
         if (numGroups < 10) {
             return new TestResult(0.0, 0.0, false);
         }
@@ -295,17 +309,9 @@ public class testsController implements Initializable {
             }
         }
 
-        if (validCategories == 0) {
-            return new TestResult(0.0, 0.0, false);
-        }
-
-        int df = validCategories - 1;
-        ChiSquaredDistribution chiDist = new ChiSquaredDistribution(df);
-        double pValue = 1.0 - chiDist.cumulativeProbability(chiSquare);
-        boolean passed = pValue > ALPHA;
-
-        return new TestResult(chiSquare, pValue, passed);
+        return getTestResult(chiSquare, validCategories);
     }
+
 
     private static double calculatePokerProbability(int k, int d, int r) {
         if (r > k || r > d) return 0.0;

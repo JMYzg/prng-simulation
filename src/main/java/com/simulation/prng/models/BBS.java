@@ -1,8 +1,6 @@
 package com.simulation.prng.models;
 
-import com.simulation.prng.utils.AlertHandler;
 import com.simulation.prng.utils.templates.AlgorithmTemplate;
-import javafx.scene.control.Alert;
 
 public class BBS extends AlgorithmTemplate {
 

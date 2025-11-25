@@ -96,7 +96,6 @@ public class Controller implements Initializable {
         });
 
         testsButton.setOnAction((ActionEvent event) -> {
-            // Validar que hay resultados disponibles
             if (testsController.results == null || testsController.results.isEmpty()) {
                 AlertHandler.showAlert(
                         Alert.AlertType.WARNING,
@@ -112,7 +111,6 @@ public class Controller implements Initializable {
             try {
                 Parent root = fxmlLoader.load();
 
-                // IMPORTANTE: Obtener el controlador DESPUÉS de load()
                 testsController controller = fxmlLoader.getController();
 
                 Scene scene = new Scene(root);
@@ -125,7 +123,6 @@ public class Controller implements Initializable {
                 stage.initOwner(ownerStage);
                 stage.setResizable(false);
 
-                // Los labels ya se actualizan automáticamente en initialize()
                 stage.showAndWait();
 
             } catch (IOException e) {
