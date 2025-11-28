@@ -86,4 +86,58 @@ public class PoissonDist implements RandomVariable {
     public String getDistributionName() {
         return "Poisson";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return false;
+    }
+
+    /**
+     * Calculates the PMF of the Poisson distribution.
+     * P(X = k) = (lambda^k * e^(-lambda)) / k!
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("Poisson requires lambda");
+        double lambda = params[0];
+        if (lambda <= 0)
+            throw new IllegalArgumentException("lambda must be > 0");
+
+        int k = (int) x;
+        if (k < 0 || Math.abs(x - k) > 1e-9)
+            return 0.0; // Not an integer or negative
+
+        return (Math.pow(lambda, k) * Math.exp(-lambda)) / factorial(k);
+    }
+
+    /**
+     * Calculates the CDF of the Poisson distribution.
+     * F(k) = Sum(P(X=i)) for i=0 to k
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("Poisson requires lambda");
+        double lambda = params[0];
+        if (lambda <= 0)
+            throw new IllegalArgumentException("lambda must be > 0");
+
+        if (x < 0)
+            return 0.0;
+        int k = (int) x;
+        double sum = 0.0;
+        for (int i = 0; i <= k; i++) {
+            sum += (Math.pow(lambda, i) * Math.exp(-lambda)) / factorial(i);
+        }
+        return sum;
+    }
+
+    private double factorial(int n) {
+        double fact = 1;
+        for (int i = 2; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
 }

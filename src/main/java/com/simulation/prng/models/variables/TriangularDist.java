@@ -94,4 +94,53 @@ public class TriangularDist implements RandomVariable {
     public String getDistributionName() {
         return "Triangular";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return true;
+    }
+
+    /**
+     * Calculates the PDF of the Triangular distribution.
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 3)
+            throw new IllegalArgumentException("Triangular requires a, b, c");
+        double a = params[0];
+        double b = params[1];
+        double c = params[2];
+        if (a >= b || c < a || c > b)
+            throw new IllegalArgumentException("Invalid parameters: a <= c <= b");
+
+        if (x < a || x > b)
+            return 0.0;
+        if (x < c)
+            return 2 * (x - a) / ((b - a) * (c - a));
+        if (Math.abs(x - c) < 1e-9)
+            return 2 / (b - a);
+        return 2 * (b - x) / ((b - a) * (b - c));
+    }
+
+    /**
+     * Calculates the CDF of the Triangular distribution.
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 3)
+            throw new IllegalArgumentException("Triangular requires a, b, c");
+        double a = params[0];
+        double b = params[1];
+        double c = params[2];
+        if (a >= b || c < a || c > b)
+            throw new IllegalArgumentException("Invalid parameters: a <= c <= b");
+
+        if (x <= a)
+            return 0.0;
+        if (x >= b)
+            return 1.0;
+        if (x <= c)
+            return Math.pow(x - a, 2) / ((b - a) * (c - a));
+        return 1.0 - Math.pow(b - x, 2) / ((b - a) * (b - c));
+    }
 }

@@ -56,4 +56,46 @@ public class BernoulliDist implements RandomVariable {
     public String getDistributionName() {
         return "Bernoulli";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return false;
+    }
+
+    /**
+     * Calculates the PMF of the Bernoulli distribution.
+     * P(X = 1) = p, P(X = 0) = 1 - p
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("Bernoulli requires p");
+        double p = params[0];
+        if (p < 0 || p > 1)
+            throw new IllegalArgumentException("p must be between 0 and 1");
+
+        if (Math.abs(x - 1.0) < 1e-9)
+            return p;
+        if (Math.abs(x - 0.0) < 1e-9)
+            return 1.0 - p;
+        return 0.0;
+    }
+
+    /**
+     * Calculates the CDF of the Bernoulli distribution.
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("Bernoulli requires p");
+        double p = params[0];
+        if (p < 0 || p > 1)
+            throw new IllegalArgumentException("p must be between 0 and 1");
+
+        if (x < 0)
+            return 0.0;
+        if (x < 1)
+            return 1.0 - p;
+        return 1.0;
+    }
 }

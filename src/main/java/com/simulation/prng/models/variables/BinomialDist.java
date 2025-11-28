@@ -87,4 +87,74 @@ public class BinomialDist implements RandomVariable {
     public String getDistributionName() {
         return "Binomial";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return false;
+    }
+
+    /**
+     * Calculates the PMF of the Binomial distribution.
+     * P(X = k) = C(n, k) * p^k * (1-p)^(n-k)
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 2)
+            throw new IllegalArgumentException("Binomial requires n and p");
+        int n = (int) params[0];
+        double p = params[1];
+        if (n <= 0)
+            throw new IllegalArgumentException("n must be > 0");
+        if (p < 0 || p > 1)
+            throw new IllegalArgumentException("p must be between 0 and 1");
+
+        int k = (int) x;
+        if (k < 0 || k > n || Math.abs(x - k) > 1e-9)
+            return 0.0;
+
+        return combinations(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+    }
+
+    /**
+     * Calculates the CDF of the Binomial distribution.
+     * F(k) = Sum(P(X=i)) for i=0 to k
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 2)
+            throw new IllegalArgumentException("Binomial requires n and p");
+        int n = (int) params[0];
+        double p = params[1];
+        if (n <= 0)
+            throw new IllegalArgumentException("n must be > 0");
+        if (p < 0 || p > 1)
+            throw new IllegalArgumentException("p must be between 0 and 1");
+
+        if (x < 0)
+            return 0.0;
+        if (x >= n)
+            return 1.0;
+
+        int k = (int) x;
+        double sum = 0.0;
+        for (int i = 0; i <= k; i++) {
+            sum += combinations(n, i) * Math.pow(p, i) * Math.pow(1 - p, n - i);
+        }
+        return sum;
+    }
+
+    private double combinations(int n, int k) {
+        if (k < 0 || k > n)
+            return 0;
+        if (k == 0 || k == n)
+            return 1;
+        if (k > n / 2)
+            k = n - k;
+
+        double res = 1;
+        for (int i = 1; i <= k; i++) {
+            res = res * (n - i + 1) / i;
+        }
+        return res;
+    }
 }

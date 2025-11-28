@@ -48,7 +48,7 @@ public class Controller implements Initializable {
     Consumer<ObservableList<Double>> success = (result) -> {
         listView.setItems(result);
         executeButton.setDisable(false);
-        lifeCycleLabel.setText("Life Cicle: " + listView.getItems().size());
+        lifeCycleLabel.setText("" + listView.getItems().size());
         testsController.results = result;
     };
 

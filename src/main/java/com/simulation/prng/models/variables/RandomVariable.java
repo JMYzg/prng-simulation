@@ -36,4 +36,33 @@ public interface RandomVariable {
      * @return the distribution name (e.g., "Uniform", "Exponential")
      */
     String getDistributionName();
+
+    /**
+     * Returns true if the random variable is continuous, false otherwise.
+     * 
+     * @return true if continuous, false if discrete
+     */
+    boolean isContinuous();
+
+    /**
+     * Calculates the probability mass function (PMF) for discrete variables
+     * or probability density function (PDF) for continuous variables at x.
+     * 
+     * @param x      the value to evaluate
+     * @param params distribution parameters
+     * @return P(X = x) for discrete, f(x) for continuous
+     */
+    double getProbability(double x, double... params);
+
+    /**
+     * Calculates the Cumulative Distribution Function (CDF) at x.
+     * Used for Kolmogorov-Smirnov and Anderson-Darling tests.
+     * 
+     * @param x      the value to evaluate
+     * @param params distribution parameters
+     * @return P(X <= x)
+     */
+    default double cdf(double x, double... params) {
+        throw new UnsupportedOperationException("CDF not implemented for this distribution");
+    }
 }

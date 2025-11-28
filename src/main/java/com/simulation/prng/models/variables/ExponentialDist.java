@@ -78,4 +78,43 @@ public class ExponentialDist implements RandomVariable {
     public String getDistributionName() {
         return "Exponential";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return true;
+    }
+
+    /**
+     * Calculates the PDF of the Exponential distribution.
+     * f(x) = lambda * e^(-lambda * x) for x >= 0
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("Exponential requires lambda");
+        double lambda = params[0];
+        if (lambda <= 0)
+            throw new IllegalArgumentException("lambda must be > 0");
+
+        if (x < 0)
+            return 0.0;
+        return lambda * Math.exp(-lambda * x);
+    }
+
+    /**
+     * Calculates the CDF of the Exponential distribution.
+     * F(x) = 1 - e^(-lambda * x) for x >= 0
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("Exponential requires lambda");
+        double lambda = params[0];
+        if (lambda <= 0)
+            throw new IllegalArgumentException("lambda must be > 0");
+
+        if (x < 0)
+            return 0.0;
+        return 1.0 - Math.exp(-lambda * x);
+    }
 }

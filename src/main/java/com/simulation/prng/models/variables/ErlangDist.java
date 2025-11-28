@@ -88,4 +88,61 @@ public class ErlangDist implements RandomVariable {
     public String getDistributionName() {
         return "Erlang";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return true;
+    }
+
+    /**
+     * Calculates the PDF of the Erlang distribution.
+     * f(x) = (lambda^k * x^(k-1) * e^(-lambda*x)) / (k-1)!
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 2)
+            throw new IllegalArgumentException("Erlang requires k and lambda");
+        int k = (int) params[0];
+        double lambda = params[1];
+        if (k <= 0)
+            throw new IllegalArgumentException("k must be > 0");
+        if (lambda <= 0)
+            throw new IllegalArgumentException("lambda must be > 0");
+
+        if (x < 0)
+            return 0.0;
+        return (Math.pow(lambda, k) * Math.pow(x, k - 1) * Math.exp(-lambda * x)) / factorial(k - 1);
+    }
+
+    /**
+     * Calculates the CDF of the Erlang distribution.
+     * F(x) = 1 - Sum( (e^(-lambda*x) * (lambda*x)^i) / i! ) for i=0 to k-1
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 2)
+            throw new IllegalArgumentException("Erlang requires k and lambda");
+        int k = (int) params[0];
+        double lambda = params[1];
+        if (k <= 0)
+            throw new IllegalArgumentException("k must be > 0");
+        if (lambda <= 0)
+            throw new IllegalArgumentException("lambda must be > 0");
+
+        if (x < 0)
+            return 0.0;
+        double sum = 0.0;
+        for (int i = 0; i < k; i++) {
+            sum += (Math.exp(-lambda * x) * Math.pow(lambda * x, i)) / factorial(i);
+        }
+        return 1.0 - sum;
+    }
+
+    private double factorial(int n) {
+        double fact = 1;
+        for (int i = 2; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
 }

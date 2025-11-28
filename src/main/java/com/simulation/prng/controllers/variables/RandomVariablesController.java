@@ -12,6 +12,11 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -99,6 +104,8 @@ public class RandomVariablesController implements Initializable {
     @FXML
     private Button btnSimulate;
     @FXML
+    private Button btnTest;
+    @FXML
     private Button btnClear;
 
     // --- Constants & Data ---
@@ -113,6 +120,9 @@ public class RandomVariablesController implements Initializable {
     private static final String DIST_TRIANGULAR = "Triangular";
 
     private List<Double> pseudoRandomNumbers;
+    private List<Double> generatedVariablesList;
+    private RandomVariable currentModel;
+    private double[] currentParams;
     private final DecimalFormat df = new DecimalFormat("#.####");
 
     /**
@@ -139,6 +149,7 @@ public class RandomVariablesController implements Initializable {
 
         // Button Actions
         btnSimulate.setOnAction(e -> onGenerate());
+        btnTest.setOnAction(e -> onTest());
         btnClear.setOnAction(e -> onClear());
 
         // Auto-select first item
@@ -183,32 +194,31 @@ public class RandomVariablesController implements Initializable {
         }
 
         try {
-            List<Double> generatedValues = new ArrayList<>();
+            // Instantiate model and params once
+            prepareModel(selectedDist);
+
+            generatedVariablesList = new ArrayList<>();
             Iterator<Double> iterator = pseudoRandomNumbers.iterator();
 
-            // Generation Loop: Consumes PRNs until exhausted or insufficient for next
-            // variable
+            // Generation Loop
             while (iterator.hasNext()) {
                 try {
-                    double val = generateValue(selectedDist, iterator);
-                    generatedValues.add(val);
+                    double val = currentModel.generate(iterator, currentParams);
+                    generatedVariablesList.add(val);
                 } catch (NoSuchElementException e) {
-                    // PRNs exhausted mid-calculation for a variable (e.g. Normal needing 12 but
-                    // only 5 left)
-                    // Stop generation
                     break;
                 }
             }
 
-            if (generatedValues.isEmpty()) {
+            if (generatedVariablesList.isEmpty()) {
                 AlertHandler.showAlert(Alert.AlertType.WARNING, "Warning", "Insufficient PRNs",
                         "Not enough random numbers to generate a single variable.");
                 return;
             }
 
-            displayResults(generatedValues);
-            updateStats(generatedValues);
-            updateChart(generatedValues, selectedDist);
+            displayResults(generatedVariablesList);
+            updateStats(generatedVariablesList);
+            updateChart(generatedVariablesList, selectedDist);
 
         } catch (NumberFormatException e) {
             AlertHandler.showAlert(Alert.AlertType.ERROR, "Input Error", "Invalid Number Format",
@@ -221,51 +231,96 @@ public class RandomVariablesController implements Initializable {
         }
     }
 
-    private double generateValue(String dist, Iterator<Double> iterator) {
-        // Note: Iterator.next() throws NoSuchElementException if no elements remain.
-        // This is caught in the loop to stop generation.
-
+    private void prepareModel(String dist) {
         switch (dist) {
             case DIST_UNIFORM:
                 double min = Double.parseDouble(txtMin.getText());
                 double max = Double.parseDouble(txtMax.getText());
-                return new UniformDist().generate(iterator, min, max);
+                currentModel = new UniformDist();
+                currentParams = new double[] { min, max };
+                break;
 
             case DIST_EXPONENTIAL:
                 double lambdaExp = Double.parseDouble(txtLambda.getText());
-                return new ExponentialDist().generate(iterator, lambdaExp);
+                currentModel = new ExponentialDist();
+                currentParams = new double[] { lambdaExp };
+                break;
 
             case DIST_NORMAL:
                 double mean = Double.parseDouble(txtMean.getText());
                 double stDev = Double.parseDouble(txtStDev.getText());
-                return new NormalDist().generate(iterator, mean, stDev);
+                currentModel = new NormalDist();
+                currentParams = new double[] { mean, stDev };
+                break;
 
             case DIST_ERLANG:
                 int k = Integer.parseInt(txtErlangK.getText());
                 double lambdaErl = Double.parseDouble(txtErlangLambda.getText());
-                return new ErlangDist().generate(iterator, (double) k, lambdaErl);
+                currentModel = new ErlangDist();
+                currentParams = new double[] { k, lambdaErl };
+                break;
 
             case DIST_BERNOULLI:
                 double pBern = Double.parseDouble(txtProb.getText());
-                return new BernoulliDist().generate(iterator, pBern);
+                currentModel = new BernoulliDist();
+                currentParams = new double[] { pBern };
+                break;
 
             case DIST_POISSON:
                 double lambdaPois = Double.parseDouble(txtPoissonLambda.getText());
-                return new PoissonDist().generate(iterator, lambdaPois);
+                currentModel = new PoissonDist();
+                currentParams = new double[] { lambdaPois };
+                break;
 
             case DIST_BINOMIAL:
                 int nBin = Integer.parseInt(txtBinomialN.getText());
                 double pBin = Double.parseDouble(txtBinomialP.getText());
-                return new BinomialDist().generate(iterator, (double) nBin, pBin);
+                currentModel = new BinomialDist();
+                currentParams = new double[] { nBin, pBin };
+                break;
 
             case DIST_TRIANGULAR:
                 double minTri = Double.parseDouble(txtTriA.getText());
                 double maxTri = Double.parseDouble(txtTriB.getText());
                 double modeTri = Double.parseDouble(txtTriC.getText());
-                return new TriangularDist().generate(iterator, minTri, maxTri, modeTri);
+                currentModel = new TriangularDist();
+                currentParams = new double[] { minTri, maxTri, modeTri };
+                break;
 
             default:
                 throw new IllegalArgumentException("Unknown distribution");
+        }
+    }
+
+    private void onTest() {
+        if (generatedVariablesList == null || generatedVariablesList.isEmpty()) {
+            AlertHandler.showAlert(Alert.AlertType.WARNING, "Warning", "No Data",
+                    "Please generate variables first.");
+            return;
+        }
+
+        try {
+            if (currentModel == null) {
+                AlertHandler.showAlert(Alert.AlertType.ERROR, "Error", "No Model", "Model state is missing.");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GoodnessOfFit.fxml"));
+            Parent root = loader.load();
+            GoodnessOfFitController controller = loader.getController();
+
+            controller.initData(generatedVariablesList, currentModel, currentParams);
+
+            Stage stage = new Stage();
+            stage.setTitle("Goodness of Fit Test");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(btnTest.getScene().getWindow());
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertHandler.showAlert(Alert.AlertType.ERROR, "Error", "Could not open test window", e.getMessage());
         }
     }
 

@@ -77,4 +77,48 @@ public class UniformDist implements RandomVariable {
     public String getDistributionName() {
         return "Uniform";
     }
+
+    @Override
+    public boolean isContinuous() {
+        return true;
+    }
+
+    /**
+     * Calculates the PDF of the Uniform distribution.
+     * f(x) = 1 / (b - a) for a <= x <= b
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length != 2)
+            throw new IllegalArgumentException("Uniform requires min (a) and max (b)");
+        double a = params[0];
+        double b = params[1];
+        if (a >= b)
+            throw new IllegalArgumentException("min (a) must be < max (b)");
+
+        if (x >= a && x <= b) {
+            return 1.0 / (b - a);
+        }
+        return 0.0;
+    }
+
+    /**
+     * Calculates the CDF of the Uniform distribution.
+     * F(x) = (x - a) / (b - a) for a <= x <= b
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length != 2)
+            throw new IllegalArgumentException("Uniform requires min (a) and max (b)");
+        double a = params[0];
+        double b = params[1];
+        if (a >= b)
+            throw new IllegalArgumentException("min (a) must be < max (b)");
+
+        if (x < a)
+            return 0.0;
+        if (x > b)
+            return 1.0;
+        return (x - a) / (b - a);
+    }
 }

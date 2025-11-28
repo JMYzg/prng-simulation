@@ -84,6 +84,28 @@ public class NormalDist implements RandomVariable {
         return ((sum - 6.0) * stdDev) + mean;
     }
 
+    @Override
+    public boolean isContinuous() {
+        return true;
+    }
+
+    /**
+     * Calculates the PDF of the Normal distribution.
+     * f(x) = (1 / (sigma * sqrt(2*pi))) * e^(-0.5 * ((x - mu) / sigma)^2)
+     */
+    @Override
+    public double getProbability(double x, double... params) {
+        if (params.length < 2)
+            throw new IllegalArgumentException("Normal requires mean and stdDev");
+        double mean = params[0];
+        double stdDev = params[1];
+        if (stdDev <= 0)
+            throw new IllegalArgumentException("stdDev must be > 0");
+
+        return (1.0 / (stdDev * Math.sqrt(2 * Math.PI))) *
+                Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2));
+    }
+
     /**
      * Returns the name of this distribution.
      * 
@@ -92,5 +114,25 @@ public class NormalDist implements RandomVariable {
     @Override
     public String getDistributionName() {
         return "Normal";
+    }
+
+    /**
+     * Calculates the Cumulative Distribution Function (CDF) at x.
+     * 
+     * @param x      the value to evaluate
+     * @param params params[0] = mean, params[1] = stdDev
+     * @return P(X <= x)
+     */
+    @Override
+    public double cdf(double x, double... params) {
+        if (params.length < 2) {
+            throw new IllegalArgumentException("Normal distribution requires mean and stdDev for CDF");
+        }
+        double mean = params[0];
+        double stdDev = params[1];
+
+        org.apache.commons.math3.distribution.NormalDistribution normal = new org.apache.commons.math3.distribution.NormalDistribution(
+                mean, stdDev);
+        return normal.cumulativeProbability(x);
     }
 }
